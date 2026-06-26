@@ -80,6 +80,7 @@ export default function TutorDashboard() {
   const [assigningTestId, setAssigningTestId] = useState<string>('');
   const [viewingCabinetStudentId, setViewingCabinetStudentId] = useState<string | null>(null);
   const [tutorStatsType, setTutorStatsType] = useState<'EGE' | 'OGE'>('EGE');
+  const [studentCreateError, setStudentCreateError] = useState<string | null>(null);
 
   // Test builder UI states
   const [isCreatingTest, setIsCreatingTest] = useState(false);
@@ -188,13 +189,15 @@ export default function TutorDashboard() {
   const handleCreateStudent = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newStudentName.trim()) return;
+    setStudentCreateError(null);
     try {
       setLoading(true);
       await createStudent(newStudentName.trim());
       setNewStudentName('');
       await loadStudents();
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      setStudentCreateError(error.message || 'Не удалось создать кабинет ученика. Пожалуйста, попробуйте еще раз.');
     } finally {
       setLoading(false);
     }
@@ -650,6 +653,11 @@ export default function TutorDashboard() {
                         onChange={(e) => setNewStudentName(e.target.value)}
                         className="w-full bg-[#121218] border border-white/10 rounded-xl py-2.5 px-4 text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition-all font-rounded"
                       />
+                      {studentCreateError && (
+                        <p className="text-rose-400 text-xs flex items-center gap-1">
+                          <AlertCircle className="w-3.5 h-3.5" /> {studentCreateError}
+                        </p>
+                      )}
                       <button 
                         type="submit"
                         className="w-full liquid-glass-btn py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2"
