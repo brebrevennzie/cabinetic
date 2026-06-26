@@ -134,11 +134,13 @@ const DEFAULT_TESTS = [
   }
 ];
 
+import defaultFirebaseConfig from '../firebase-applet-config.json';
+
 const app = express();
 app.use(express.json({ limit: '10mb' }));
 
 // Read Firebase Config
-let firebaseConfig: any;
+let firebaseConfig: any = defaultFirebaseConfig;
 if (process.env.FIREBASE_CONFIG) {
   try {
     firebaseConfig = JSON.parse(process.env.FIREBASE_CONFIG);
@@ -147,14 +149,6 @@ if (process.env.FIREBASE_CONFIG) {
   }
 }
 
-if (!firebaseConfig) {
-  const configPath = path.resolve(process.cwd(), 'firebase-applet-config.json');
-  if (fs.existsSync(configPath)) {
-    firebaseConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-  } else {
-    throw new Error('Firebase configuration not found! Please provide it via FIREBASE_CONFIG environment variable or firebase-applet-config.json file.');
-  }
-}
 
 // Initialize Firebase App
 const firebaseApp = initializeApp(firebaseConfig);
