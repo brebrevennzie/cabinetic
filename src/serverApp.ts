@@ -134,13 +134,8 @@ const DEFAULT_TESTS = [
   }
 ];
 
-import defaultFirebaseConfig from '../firebase-applet-config.json';
-
-const app = express();
-app.use(express.json({ limit: '10mb' }));
-
 // Read Firebase Config
-let firebaseConfig: any = defaultFirebaseConfig;
+let firebaseConfig: any = null;
 if (process.env.FIREBASE_CONFIG) {
   try {
     firebaseConfig = JSON.parse(process.env.FIREBASE_CONFIG);
@@ -148,6 +143,39 @@ if (process.env.FIREBASE_CONFIG) {
     console.error('Error parsing FIREBASE_CONFIG env variable:', e);
   }
 }
+
+if (!firebaseConfig) {
+  try {
+    const pathsToTry = [
+      path.resolve(process.cwd(), 'firebase-applet-config.json'),
+      path.resolve(process.cwd(), '../firebase-applet-config.json'),
+      path.resolve(path.dirname(new URL(import.meta.url).pathname), 'firebase-applet-config.json'),
+      path.resolve(path.dirname(new URL(import.meta.url).pathname), '../firebase-applet-config.json')
+    ];
+    for (const p of pathsToTry) {
+      if (fs.existsSync(p)) {
+        firebaseConfig = JSON.parse(fs.readFileSync(p, 'utf8'));
+        break;
+      }
+    }
+  } catch (err) {
+    console.error('Error reading firebase-applet-config.json:', err);
+  }
+}
+
+if (!firebaseConfig) {
+  console.warn('WARNING: Firebase configuration not found. Using empty stub config.');
+  firebaseConfig = {
+    projectId: "",
+    appId: "",
+    apiKey: "",
+    authDomain: "",
+    firestoreDatabaseId: ""
+  };
+}
+
+const app = express();
+app.use(express.json({ limit: '10mb' }));
 
 
 // Initialize Firebase App
