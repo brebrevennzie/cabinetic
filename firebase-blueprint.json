@@ -1,0 +1,120 @@
+{
+  "entities": {
+    "tutor_settings": {
+      "title": "TutorSettings",
+      "description": "Settings for the tutor, such as PIN password hash",
+      "type": "object",
+      "properties": {
+        "isConfigured": {
+          "type": "boolean"
+        },
+        "passwordHash": {
+          "type": "string"
+        }
+      },
+      "required": ["isConfigured"]
+    },
+    "test": {
+      "title": "Test",
+      "description": "A preparation test for OGE or EGE exams",
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "systemType": {
+          "type": "string",
+          "enum": ["OGE", "EGE"]
+        },
+        "questions": {
+          "type": "array"
+        },
+        "createdAt": {
+          "type": "string"
+        }
+      },
+      "required": ["title", "systemType", "questions"]
+    },
+    "student": {
+      "title": "Student",
+      "description": "A student profile",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        }
+      },
+      "required": ["name"]
+    },
+    "student_test": {
+      "title": "StudentTest",
+      "description": "A test assigned to a specific student with progress and answers",
+      "type": "object",
+      "properties": {
+        "studentId": {
+          "type": "string"
+        },
+        "testId": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "systemType": {
+          "type": "string",
+          "enum": ["OGE", "EGE"]
+        },
+        "questions": {
+          "type": "array"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["assigned", "completed"]
+        },
+        "assignedAt": {
+          "type": "string"
+        },
+        "completedAt": {
+          "type": "string"
+        },
+        "answers": {
+          "type": "object"
+        },
+        "timeSpent": {
+          "type": "integer"
+        },
+        "tabSwitches": {
+          "type": "integer"
+        },
+        "results": {
+          "type": "object"
+        }
+      },
+      "required": ["studentId", "testId", "title", "systemType", "questions", "status", "assignedAt"]
+    }
+  },
+  "firestore": {
+    "/settings/{settingId}": {
+      "schema": "tutor_settings",
+      "description": "Tutor settings and PIN hash"
+    },
+    "/tests/{testId}": {
+      "schema": "test",
+      "description": "Preparation tests in the library"
+    },
+    "/students/{studentId}": {
+      "schema": "student",
+      "description": "Student profiles list"
+    },
+    "/student_tests/{studentTestId}": {
+      "schema": "student_test",
+      "description": "Assigned tests for students with answers and scoring"
+    }
+  }
+}

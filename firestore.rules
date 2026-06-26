@@ -1,0 +1,24 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Settings Collection Rules
+    match /settings/{settingId} {
+      allow read, write: if true;
+    }
+
+    // Tests Collection Rules
+    match /tests/{testId} {
+      allow read, write: if true;
+    }
+
+    // Students Collection Rules
+    match /students/{studentId} {
+      allow read, write: if true;
+    }
+
+    // Student Tests Collection Rules
+    match /student_tests/{studentTestId} {
+      allow read, write: if true;
+    }
+  }
+}

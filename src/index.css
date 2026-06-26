@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&family=Fira+Code:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Outfit", "Comfortaa", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Fira Code", monospace;
+  
+  /* Liquid Glass Custom Theme Accents */
+  --color-glass-bg: rgba(255, 255, 255, 0.03);
+  --color-glass-border: rgba(255, 255, 255, 0.08);
+  --color-glass-highlight: rgba(255, 255, 255, 0.15);
+
+  /* Override purple color scale with high-end Lavender hues */
+  --color-purple-50: #f7f6fc;
+  --color-purple-100: #eeeaf7;
+  --color-purple-200: #dcd4f0;
+  --color-purple-300: #c3b5eb;
+  --color-purple-400: #a594e0;
+  --color-purple-500: #8773db;
+  --color-purple-600: #725ec3;
+  --color-purple-700: #5f4da8;
+  --color-purple-800: #4b3c8c;
+  --color-purple-900: #392e6f;
+  --color-purple-950: #251d4b;
+}
+
+body {
+  background-color: #13121b;
+  color: #f1f2f6;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.005);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Liquid Glass button effect */
+.liquid-glass-btn {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3), 
+              inset 0 1px 1px rgba(255, 255, 255, 0.15),
+              inset 0 -1px 1px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.liquid-glass-btn:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.03) 100%);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4),
+              0 0 12px rgba(255, 255, 255, 0.05),
+              inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.liquid-glass-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2),
+              inset 0 1px 1px rgba(255, 255, 255, 0.08);
+}
+
+/* Glass panel background - Bento style */
+.glass-panel {
+  background: rgba(20, 18, 27, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(139, 92, 246, 0.05);
+  border-radius: 28px; /* Bento grid standard */
+  box-shadow: 0 6px 28px 0 rgba(0, 0, 0, 0.28),
+              inset 0 1px 0px rgba(255, 255, 255, 0.03);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel:hover {
+  border-color: rgba(139, 92, 246, 0.10);
+  box-shadow: 0 10px 35px 0 rgba(0, 0, 0, 0.45),
+              inset 0 1px 0px rgba(255, 255, 255, 0.03);
+}
+
+/* Accent Glowing animations */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 12px rgba(139, 92, 246, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+  }
+}
+
+.glow-violet {
+  animation: pulse-glow 3s infinite;
+}
